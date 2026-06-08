@@ -16,11 +16,10 @@ python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-3. Install dependencies if a `requirements.txt` file is added later. If you use `.env`, install `python-dotenv` too:
+3. Install dependencies from `requirements.txt`:
 
 ```powershell
 pip install -r requirements.txt
-pip install python-dotenv
 ```
 
 4. Copy `.env.example` to `.env` and add your secrets. This repo already ignores `.env`.
