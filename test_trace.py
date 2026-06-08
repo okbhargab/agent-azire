@@ -1,4 +1,7 @@
+from dotenv import load_dotenv
 from phoenix.otel import register
+
+load_dotenv()
 
 tracer_provider = register(
     project_name="default"
