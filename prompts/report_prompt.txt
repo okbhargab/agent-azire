@@ -1,0 +1,20 @@
+Generate an executive reliability report for the AI agent.
+
+Include the following sections:
+
+## Health Score
+A single number from 0 to 100 representing overall reliability.
+
+## Summary
+A 2-3 sentence overview of the agent's current health.
+
+## Detected Issues
+A numbered list of issues found, each with severity and description.
+
+## Root Causes
+For each issue, explain the likely root cause.
+
+## Recommendations
+Actionable steps to improve reliability, ordered by impact.
+
+Format the report in clear Markdown.
