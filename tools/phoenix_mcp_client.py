@@ -474,7 +474,7 @@ class PhoenixMCPClient:
 
         return _get_mock_prompts()
 
-    def get_experiments(self) -> List[Dict[str, Any]]:
+    def get_experiments(self, dataset_id: str = "") -> List[Dict[str, Any]]:
         """Retrieve experiments. Routing through MCP tool with SDK and mock fallbacks."""
         if self._use_mock:
             return _get_mock_experiments()
@@ -482,7 +482,7 @@ class PhoenixMCPClient:
         # A. Try MCP
         if self._mcp_adapter is not None:
             try:
-                experiments = self._mcp_adapter.get_experiments()
+                experiments = self._mcp_adapter.get_experiments(dataset_id=dataset_id)
                 if experiments:
                     logger.info("PhoenixMCPClient: Successfully retrieved experiments via MCP server.")
                     return experiments
@@ -492,7 +492,7 @@ class PhoenixMCPClient:
         # B. Try SDK Fallback
         if self._real_client is not None:
             try:
-                experiments = self._real_client.get_experiments()
+                experiments = self._real_client.get_experiments(dataset_id=dataset_id)
                 if experiments and not (len(experiments) == 1 and "error" in experiments[0]):
                     logger.info("PhoenixMCPClient: Successfully retrieved experiments via SDK fallback.")
                     return experiments
@@ -565,11 +565,11 @@ def get_prompts() -> List[Dict[str, Any]]:
     return client.get_prompts()
 
 
-def get_experiments() -> List[Dict[str, Any]]:
+def get_experiments(dataset_id: str = "") -> List[Dict[str, Any]]:
     """Retrieve experiments from Phoenix Cloud (or mocks)."""
     client = _get_mcp_client()
     logger.info("get_experiments called. Data source: %s", client.data_source)
-    return client.get_experiments()
+    return client.get_experiments(dataset_id=dataset_id)
 
 
 def get_datasets() -> List[Dict[str, Any]]:

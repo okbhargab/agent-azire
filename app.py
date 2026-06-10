@@ -25,6 +25,8 @@ if not os.getenv("GOOGLE_API_KEY") and os.getenv("GENAI_API_KEY"):
     os.environ["GOOGLE_API_KEY"] = os.getenv("GENAI_API_KEY", "")
 
 # ── 2. Phoenix tracing (MUST happen before any ADK import) ─────────
+PHOENIX_PROJECT = os.getenv("PHOENIX_PROJECT_NAME", "phoenixguard")
+
 try:
     from phoenix.otel import register  # noqa: E402
     from openinference.instrumentation.google_adk import GoogleADKInstrumentor  # noqa: E402
@@ -34,7 +36,6 @@ except ImportError:
 
 if PHOENIX_TRACING_AVAILABLE:
     try:
-        PHOENIX_PROJECT = os.getenv("PHOENIX_PROJECT_NAME", "phoenixguard")
         tracer_provider = register(project_name=PHOENIX_PROJECT)
         GoogleADKInstrumentor().instrument(tracer_provider=tracer_provider)
     except Exception as e:

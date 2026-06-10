@@ -132,9 +132,22 @@ class FailureDetector:
         # Clean traces for prompt to avoid token overflow, keeping only structure and failures
         clean_traces_summary = []
         for t in traces:
+            # Calculate actual trace duration in seconds
+            duration_seconds = 0.0
+            start_str = t.get("start_time", "")
+            end_str = t.get("end_time", "")
+            if start_str and end_str:
+                try:
+                    from agents.trace_analyzer import _parse_iso_datetime
+                    start_t = _parse_iso_datetime(start_str)
+                    end_t = _parse_iso_datetime(end_str)
+                    duration_seconds = max(0.0, (end_t - start_t).total_seconds())
+                except Exception:
+                    pass
+
             trace_summary = {
                 "trace_id": t.get("trace_id"),
-                "duration": t.get("start_time"),
+                "duration": round(duration_seconds, 2),
                 "token_count_total": t.get("token_count_total"),
                 "spans": [
                     {
