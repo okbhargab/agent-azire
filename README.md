@@ -6,7 +6,7 @@ PhoenixGuard is an autonomous AI Reliability Engineer that inspects its own oper
 
 ---
 
-## Technical Stack
+##  The Technical Stack
 
 | Layer | Technology |
 |---|---|
